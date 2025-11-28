@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "include/project.h"
 #include "include/context.h"
-#include "include/logger/logger.h"
 
 int main(int argc, char **argv) {
 	printf("%s %s\n", PROJECT_NAME, PROJECT_VERSION);
