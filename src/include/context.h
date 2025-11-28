@@ -1,6 +1,6 @@
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
 #include <stdint.h>
+#include "memory/arena.h"
 
 typedef struct ComponentType {
     const char* name;
@@ -46,15 +46,18 @@ typedef struct Ecs {
     size_t entity_capacity;
 
     uint16_t max_components_count; // максимально возможное кол-во типов компонентов в проекте
-    size_t component_masks_size; // количество масок компонентов в массиве component_masks архетипа
+    uint16_t component_masks_size; // количество масок компонентов в массиве component_masks архетипа
+
     ComponentType* component_types;
-    size_t component_count;
-    size_t component_capacity;
+    uint16_t component_type_count;
 
     Archetypes archetypes;
 } Ecs;
 
 typedef struct Context {
-    Ecs* ecs; // Все, что касается Entity, Component, Archtypes
+    Ecs* ecs;
+    Arena arena;
 } Context;
 
+Context* create_context(uint16_t max_components_count);
+void destroy_context(Context* context);

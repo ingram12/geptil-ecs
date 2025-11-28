@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "include/project.h"
+#include "include/context.h"
+#include "include/logger/logger.h"
 
 int main(int argc, char **argv) {
 	printf("%s %s\n", PROJECT_NAME, PROJECT_VERSION);
@@ -9,5 +11,8 @@ int main(int argc, char **argv) {
 		for (int i = 1; i < argc; ++i) printf(" %s", argv[i]);
 		printf("\n");
 	}
+
+    Context* ctx = create_context(64);
+
 	return EXIT_SUCCESS;
 }
