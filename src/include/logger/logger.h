@@ -33,11 +33,11 @@ void logger_log(
 );
 
 #if LOGGER_DEBUG
-#define LOG_DEBUG(...) \ logger_log(LOG_LEVEL_DEBUG, __FILE__, __LINE__, __func__, __VA_ARGS__)
-#define LOG_INFO(...) \ logger_log(LOG_LEVEL_INFO, __FILE__, __LINE__, __func__, __VA_ARGS__)
-#define LOG_WARN(...) \ logger_log(LOG_LEVEL_WARN, __FILE__, __LINE__, __func__, __VA_ARGS__)
-#define LOG_ERROR(...) \ logger_log(LOG_LEVEL_ERROR, __FILE__, __LINE__, __func__, __VA_ARGS__)
-#define LOG_FATAL(...) \ logger_log(LOG_LEVEL_FATAL, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define LOG_DEBUG(...) logger_log(LOG_LEVEL_DEBUG, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define LOG_INFO(...) logger_log(LOG_LEVEL_INFO, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define LOG_WARN(...) logger_log(LOG_LEVEL_WARN, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define LOG_ERROR(...) logger_log(LOG_LEVEL_ERROR, __FILE__, __LINE__, __func__, __VA_ARGS__)
+#define LOG_FATAL(...) logger_log(LOG_LEVEL_FATAL, __FILE__, __LINE__, __func__, __VA_ARGS__)
 #else
 #define LOG_DEBUG(...) ((void)0)
 #define LOG_INFO(...) logger_log(LOG_LEVEL_INFO, 0, 0, 0, __VA_ARGS__)
