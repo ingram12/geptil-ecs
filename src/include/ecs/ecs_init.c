@@ -24,6 +24,6 @@ Ecs *init_ecs(Arena *arena, Ecs *ecs, uint16_t max_components_count)
     ecs->archetypes.query_archetype_indices = (QueryArchetypeIndices *)arena_alloc(arena, sizeof(QueryArchetypeIndices) * 64);
     ecs->archetypes.query_count = 0;
     ecs->archetypes.query_capacity = 64;
-
+    
     return ecs;
 }

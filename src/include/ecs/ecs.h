@@ -45,12 +45,10 @@ typedef struct Ecs
 {
     Entity *entities;
     size_t entity_count;
-    size_t entity_capacity;
-
+    size_t entity_capacity;  
+    Archetypes archetypes;
     uint16_t max_components_count; // максимально возможное кол-во типов компонентов в проекте
     uint16_t component_masks_size; // количество масок компонентов в массиве component_masks архетипа
-
-    Archetypes archetypes;
 } Ecs;
 
 Ecs *init_ecs(Arena *arena, Ecs *ecs, uint16_t max_components_count);

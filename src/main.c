@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
     Archetype *arch = archetype_init(ctx, COMP_POSITION | COMP_ROTATION);
     Archetype *arch1 = archetype_init(ctx, COMP_POSITION);
     Archetype *arch2 = archetype_init(ctx, COMP_ROTATION);
-  
+    Archetype *arch3 = archetype_init(ctx, COMP_ROTATION);
+
     return EXIT_SUCCESS;
 }
