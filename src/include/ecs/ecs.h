@@ -1,22 +1,14 @@
 #pragma once
 
 #include "../memory/arena.h"
+#include "component/component.h"
 #include <stddef.h>
 #include <stdint.h>
-
-typedef struct ComponentType
-{
-    const char *name;
-    size_t size;
-    size_t alignment;
-    uint16_t id;
-} ComponentType;
 
 typedef struct Archetype
 {
     uint32_t *entities;
-    void **component_arrays; // массив на указатели на массивы компонентов, размер
-                             // массива равен max_components_count
+    ComponentStorage storage; // хранилище значений массивов компонентов
     size_t entity_count;
     size_t entity_capacity;
 } Archetype;
@@ -58,10 +50,7 @@ typedef struct Ecs
     uint16_t max_components_count; // максимально возможное кол-во типов компонентов в проекте
     uint16_t component_masks_size; // количество масок компонентов в массиве component_masks архетипа
 
-    ComponentType *component_types;
-    uint16_t component_type_count;
-
     Archetypes archetypes;
 } Ecs;
 
-Ecs *init_ecs(Arena *arena, uint16_t max_components_count);
+Ecs *init_ecs(Arena *arena, Ecs *ecs, uint16_t max_components_count);

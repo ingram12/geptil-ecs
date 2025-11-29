@@ -6,7 +6,7 @@
 #include "ecs/ecs.h"
 
 typedef struct Context {
-    Ecs* ecs;
+    Ecs ecs;
     Arena arena;
 } Context;
 

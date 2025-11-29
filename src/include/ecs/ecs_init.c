@@ -3,11 +3,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-Ecs *init_ecs(Arena *arena, uint16_t max_components_count)
+Ecs *init_ecs(Arena *arena, Ecs *ecs, uint16_t max_components_count)
 {
     uint16_t component_masks_size = max_components_count / 64 + (max_components_count % 64 != 0 ? 1 : 0);
-
-    Ecs *ecs = (Ecs *)arena_alloc(arena, sizeof(Ecs));
 
     ecs->entities = (Entity *)arena_alloc(arena, sizeof(Entity) * 256);
     ecs->entity_count = 0;
@@ -15,8 +13,6 @@ Ecs *init_ecs(Arena *arena, uint16_t max_components_count)
 
     ecs->max_components_count = max_components_count;
     ecs->component_masks_size = component_masks_size;
-    ecs->component_types = (ComponentType *)arena_alloc(arena, sizeof(ComponentType) * max_components_count);
-    ecs->component_type_count = 0;
 
     ecs->archetypes.component_masks = (uint64_t *)arena_alloc(arena, sizeof(uint64_t) * component_masks_size);
 

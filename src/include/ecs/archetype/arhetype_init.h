@@ -1,4 +1,6 @@
 #include "../ecs.h"
+#pragma once
+
 #include "../../context.h"
 #include "../ecs.h"
 

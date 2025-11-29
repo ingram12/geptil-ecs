@@ -3,8 +3,8 @@
 #include "../../memory/arena.h"
 
 Archetype *archetype_init(Context *ctx, uint64_t component_mask) {
-    Ecs *ecs = ctx->ecs;
-    Arena arena = ctx->arena;
+    Arena* arena = &ctx->arena;
+    Ecs* ecs = &ctx->ecs;
 
     // Проверить, существует ли уже архетип с такой маской
     for (size_t i = 0; i < ecs->archetypes.archetype_count; ++i) {
@@ -26,19 +26,9 @@ Archetype *archetype_init(Context *ctx, uint64_t component_mask) {
     Archetype *arch = &ecs->archetypes.archetypes[index];
     arch->entity_count = 0;
     arch->entity_capacity = 64;
-    arch->entities = (uint32_t *)arena_alloc(&arena, sizeof(uint32_t) * arch->entity_capacity);
-    arch->component_arrays = (void **)arena_alloc(&arena, sizeof(void *) * ecs->max_components_count);
+    arch->entities = (uint32_t *)arena_alloc(arena, sizeof(uint32_t) * arch->entity_capacity);
 
-    //TODO: Получить по маске компоненты и инициализировать массивы компонентов
-
-    for (uint16_t i = 0; i < ecs->max_components_count; ++i) {
-        if (component_mask & (1ULL << i)) {
-            ComponentType *ct = &ecs->component_types[i];
-            arch->component_arrays[i] = arena_alloc(&arena, ct->size * arch->entity_capacity);
-        } else {
-            arch->component_arrays[i] = NULL;
-        }
-    }
+    components_storage_init(arena, &arch->storage, component_mask, arch->entity_capacity);
 
     ecs->archetypes.archetype_count++;
 
