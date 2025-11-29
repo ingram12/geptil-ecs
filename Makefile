@@ -2,7 +2,7 @@ CC ?= cc
 BUILD_DIR := build
 BIN := $(BUILD_DIR)/geptil-ecs
 SRC := $(shell find src -name '*.c')
-OBJ := $(patsubst src/%.c,$(BUILD_DIR)/%.o,$(SRC))
+OBJ := $(patsubst src/%, $(BUILD_DIR)/%, $(SRC:.c=.o))
 CFLAGS ?= -std=c17 -Wall -Wextra -Wpedantic -Iinclude
 
 ifeq ($(DEBUG),1)
