@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../memory/arena.h"
 #include <stddef.h>
 #include <stdint.h>
@@ -34,8 +36,7 @@ typedef struct Archetypes
     size_t archetype_capacity;
 
     uint64_t *query_masks; // индекс маски и запроса совпадает
-    QueryArchetypeIndices
-        *query_archetype_indices; // индекс маски и запроса совпадает
+    QueryArchetypeIndices *query_archetype_indices; // индекс маски и запроса совпадает
     size_t query_count;
     size_t query_capacity;
 } Archetypes;
