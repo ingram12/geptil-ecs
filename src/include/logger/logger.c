@@ -82,18 +82,24 @@ void logger_log(
 
 #if LOGGER_DEBUG
     // Цвет только на уровень
-    fprintf(out, "[%s%s%s] %s %s:%d %s(): ",
-            level_color(level),  // цвет открывается
-            level_name(level),   // текст уровня
-            COLOR_RESET,         // цвет закрывается
-            ts,
-            file,
-            line,
-            func);
+    fprintf(
+        out,
+        "[%s%s%s] %s %s:%d %s(): ",
+        level_color(level),  // цвет открывается
+        level_name(level),   // текст уровня
+        COLOR_RESET,         // цвет закрывается
+        ts,
+        file,
+        line,
+        func
+    );
 #else
-    fprintf(out, "[%s] %s: ",
-            level_name(level),
-            ts);
+    fprintf(
+        out,
+        "[%s] %s: ",
+        level_name(level),
+        ts
+    );
 #endif
 
     va_start(args, fmt);
