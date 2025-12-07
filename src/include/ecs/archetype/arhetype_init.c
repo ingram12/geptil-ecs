@@ -2,21 +2,21 @@
 #include "../../logger/logger.h"
 #include "../../memory/arena.h"
 
-Archetype *archetype_init(Context *ctx, uint64_t component_mask) {
+uint32_t archetype_init(Context *ctx, uint64_t component_mask) {
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
 
     // Проверить, существует ли уже архетип с такой маской
     for (size_t i = 0; i < ecs->archetypes.archetype_count; ++i) {
         if (ecs->archetypes.component_masks[i] == component_mask) {
-            return &ecs->archetypes.archetypes[i];
+            return i;
         }
     }
 
     // Если превысили capacity, ошибка
     if (ecs->archetypes.archetype_count >= ecs->archetypes.archetype_capacity) {
         LOG_FATAL("Exceeded maximum number of archetypes");
-        return NULL;
+        return 0;
     }
 
     // Добавить новый архетип
@@ -32,5 +32,5 @@ Archetype *archetype_init(Context *ctx, uint64_t component_mask) {
 
     ecs->archetypes.archetype_count++;
 
-    return arch;
+    return index;
 }
