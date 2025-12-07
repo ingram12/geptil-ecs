@@ -1,3 +1,4 @@
+// AUTO-GENERATED FILE BY gen_components.py
 #pragma once
 
 #include <stdint.h>
@@ -10,12 +11,17 @@ typedef enum {
     COMP_ROTATION = 1u << 1,
 } ComponentMask;
 
-typedef struct {
-    float x, y, z;
+typedef struct Position {
+    float x;
+    float y;
+    float z;
 } Position;
 
-typedef struct {
-    float w, x, y, z;
+typedef struct Rotation {
+    float w;
+    float x;
+    float y;
+    float z;
 } Rotation;
 
 typedef struct {

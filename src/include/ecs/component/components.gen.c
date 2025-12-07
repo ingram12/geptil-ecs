@@ -1,4 +1,6 @@
-#include "component.h"
+// AUTO-GENERATED FILE BY gen_components.py
+
+#include "components.gen.h"
 
 void components_storage_init(Arena *arena, ComponentStorage *storage, uint32_t mask, uint32_t capacity)
 {

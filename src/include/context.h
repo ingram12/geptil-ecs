@@ -10,5 +10,5 @@ typedef struct Context {
     Arena arena;
 } Context;
 
-Context* create_context(uint16_t max_components_count);
+void init_context(Context *context, uint16_t max_components_count);
 void destroy_context(Context* context);
