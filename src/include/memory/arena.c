@@ -35,23 +35,8 @@ static int ensure_capacity(Arena *a, size_t needed) {
         return 0;
     }
 
-	size_t new_capacity = a->capacity ? a->capacity * 2 : a->grow_size;
+    LOG_FATAL("Arena out of memory: needed %zu bytes, but only %zu bytes available", needed, a->capacity - a->used);
 
-	while (new_capacity < needed) {
-		if (new_capacity > (SIZE_MAX / 2)) {
-			new_capacity = needed;
-			break;
-		}
-		new_capacity *= 2;
-	}
-
-	unsigned char *nb = (unsigned char *)realloc(a->buffer, new_capacity);
-    if (nb == NULL) {
-        LOG_FATAL("Failed to grow arena buffer to size %zu", new_capacity);
-    }
-
-	a->buffer = nb;
-	a->capacity = new_capacity;
 	return 1;
 }
 
