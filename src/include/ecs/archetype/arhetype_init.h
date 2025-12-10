@@ -4,4 +4,4 @@
 #include "../../context.h"
 #include "../ecs.h"
 
-uint32_t archetype_init(Context *ctx, ComponentMask component_mask);
+uint32_t archetype_init(Context *ctx, const uint32_t *components, size_t component_count);
