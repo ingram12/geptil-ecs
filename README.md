@@ -1,11 +1,11 @@
 # geptil-ecs
 
-Сборка:
+Build:
 - make          # Release
 - make DEBUG=1  # Debug (ASAN, UBSAN, -g)
 
-Запуск:
+Run:
 - make run
 
-Очистка:
+Clean:
 - make clean
