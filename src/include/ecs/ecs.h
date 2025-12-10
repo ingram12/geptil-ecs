@@ -38,4 +38,4 @@ typedef struct Ecs {
 
 Ecs *init_ecs(Arena *arena, Ecs *ecs);
 
-ComponentMask build_component_masks(const uint32_t *components, size_t count);
+ComponentMask build_component_masks(const uint32_t *components, const size_t count);
