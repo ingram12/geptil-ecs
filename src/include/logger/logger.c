@@ -23,7 +23,7 @@ static const char *level_name(LogLevel lvl)
 #define COLOR_INFO  "\033[32m"  // green text
 #define COLOR_WARN  "\033[33m"  // yellow text
 #define COLOR_ERROR "\033[31m"  // red text
-#define COLOR_FATAL "\033[31m"  // red text (не фон)
+#define COLOR_FATAL "\033[31m"  // red text (not background)
 #define COLOR_RESET "\033[0m"
 #else
 #define COLOR_DEBUG ""
@@ -81,13 +81,13 @@ void logger_log(
     strftime(ts, sizeof(ts), "%H:%M:%S", tm_info);
 
 #if LOGGER_DEBUG
-    // Цвет только на уровень
+    // Color only for the level
     fprintf(
         out,
         "[%s%s%s] %s %s:%d %s(): ",
-        level_color(level),  // цвет открывается
-        level_name(level),   // текст уровня
-        COLOR_RESET,         // цвет закрывается
+        level_color(level),  // opening color
+        level_name(level),   // level text
+        COLOR_RESET,         // reset color
         ts,
         file,
         line,
