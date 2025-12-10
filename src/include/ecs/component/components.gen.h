@@ -7,11 +7,15 @@
 #define COMPONENT_COUNT 3
 #define COMPONENT_MASK_COUNT 1
 
+typedef struct {
+    uint64_t mask[COMPONENT_MASK_COUNT];
+} ComponentMask;
+
 typedef enum {
     COMP_POSITION = 0,
     COMP_ROTATION = 1,
     COMP_EXAMPLE = 2,
-} ComponentMask;
+} ComponentIndex;
 
 typedef struct Position {
     double x;
@@ -40,4 +44,4 @@ typedef struct Archetype {
     Example *examples;
 } Archetype;
 
-void components_storage_init(Arena *arena, Archetype *arch, uint64_t masks[COMPONENT_MASK_COUNT], uint32_t capacity);
+void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, uint32_t capacity);

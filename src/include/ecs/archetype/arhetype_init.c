@@ -3,14 +3,14 @@
 #include "../../memory/arena.h"
 #include <string.h>
 
-uint32_t archetype_init(Context *ctx, uint64_t component_masks[COMPONENT_MASK_COUNT]) {
+uint32_t archetype_init(Context *ctx, ComponentMask component_mask) {
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
 
     // Проверить, существует ли уже архетип с такой маской
     for (size_t i = 0; i < ecs->archetypes.archetype_count; ++i) {
         for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
-            if (ecs->archetypes.component_masks[i][j] != component_masks[j]) {
+            if (ecs->archetypes.component_masks[i].mask[j] != component_mask.mask[j]) {
                 break;
             }
             if (j == COMPONENT_MASK_COUNT - 1) {
@@ -26,7 +26,7 @@ uint32_t archetype_init(Context *ctx, uint64_t component_masks[COMPONENT_MASK_CO
     }
     // Добавить новый архетип
     size_t index = ecs->archetypes.archetype_count;
-    memcpy(ecs->archetypes.component_masks[index], component_masks, sizeof(uint64_t) * COMPONENT_MASK_COUNT);
+    ecs->archetypes.component_masks[index] = component_mask;
 
     Archetype *arch = &ecs->archetypes.archetypes[index];
     arch->entity_count = 0;
