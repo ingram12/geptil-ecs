@@ -32,7 +32,7 @@ uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t c
 
     Archetype *arch = &ecs->archetypes.archetypes[index];
     arch->entity_count = 0;
-    arch->entity_capacity = 64;
+    arch->entity_capacity = 256;
     arch->entities = (uint32_t *)arena_alloc(arena, sizeof(uint32_t) * arch->entity_capacity);
 
     components_storage_init(arena, arch, ecs->archetypes.component_masks[index], arch->entity_capacity);

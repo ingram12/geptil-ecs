@@ -17,12 +17,6 @@ int main(int argc, char **argv) {
 
     uint32_t archetype_id = archetype_init(&ctx, components, sizeof(components) / sizeof(components[0]));
     uint32_t entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
-    entity_id = entity_init(&ctx, archetype_id);
 
     return EXIT_SUCCESS;
 }
