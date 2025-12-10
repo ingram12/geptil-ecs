@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include "include/ecs/archetype/arhetype_init.h"
 #include "include/ecs/component/components.gen.h"
-#include "include/ecs/ecs.h"
 #include "include/ecs/entity/entity_init.h"
 
 int main(int argc, char **argv) {
@@ -14,11 +13,9 @@ int main(int argc, char **argv) {
     Context ctx = {0};
     init_context(&ctx);
 
-
     const uint32_t components[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
-    ComponentMask component_mask = build_component_masks(components, sizeof(components) / sizeof(components[0]));
 
-    uint32_t archetype_id = archetype_init(&ctx, component_mask);
+    uint32_t archetype_id = archetype_init(&ctx, components, sizeof(components) / sizeof(components[0]));
     uint32_t entity_id = entity_init(&ctx, archetype_id);
 
     return EXIT_SUCCESS;
