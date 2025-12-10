@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     init_context(&ctx);
 
 
-    const uint32_t components[] = { COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE };
+    const uint32_t components[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
     ComponentMask component_mask = build_component_masks(components, sizeof(components) / sizeof(components[0]));
 
     uint32_t archetype_id = archetype_init(&ctx, component_mask);

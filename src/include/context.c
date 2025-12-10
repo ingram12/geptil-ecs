@@ -9,7 +9,7 @@ void init_context(Context *context)
         LOG_FATAL("Failed to allocate memory for Context");
     };
 
-    arena_init(&context->arena, 1024 * 1024);
+    arena_init(&context->arena, 1024 * 1024 * 10); // 10 MB
     init_ecs(&context->arena, &context->ecs);
 }
 
