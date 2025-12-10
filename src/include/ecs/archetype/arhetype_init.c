@@ -3,7 +3,7 @@
 #include "../../memory/arena.h"
 #include <string.h>
 
-uint32_t archetype_init(Context *ctx, const uint32_t *components, size_t component_count) {
+uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t component_count) {
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
 

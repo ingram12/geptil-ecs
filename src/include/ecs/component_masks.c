@@ -1,7 +1,7 @@
 #include "ecs.h"
 #include <string.h>
 
-ComponentMask build_component_masks(const uint32_t *components, const size_t count)
+ComponentMask build_component_masks(const ComponentIndex *components, const size_t count)
 {
     ComponentMask out_mask = {0};
 
