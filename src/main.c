@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     const ComponentIndex components[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
 
     uint32_t archetype_id = archetype_init(&ctx, components, sizeof(components) / sizeof(components[0]));
-    uint32_t entity_id = entity_init(&ctx, archetype_id);
+    uint32_t entity_id = entity_init(&ctx, archetype_id, 0);
 
     return EXIT_SUCCESS;
 }

@@ -24,9 +24,10 @@ typedef struct Archetypes {
 
 typedef struct Entity {
     uint32_t id;
+    uint32_t generation;
+    uint32_t flags;
     uint32_t archetype_index;
-    uint32_t component_index;
-    uint8_t alive;
+    uint32_t archetype_entity_index;
 } Entity;
 
 typedef struct Ecs {

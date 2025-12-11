@@ -3,7 +3,7 @@
 // Инициализация сущности в указанном архетипе.
 // archetype_id - Должен быть валидным ID архетипа. Архетип не проверяется на валидность.
 // Возвращает ID созданной сущности.
-uint32_t entity_init(Context *ctx, uint32_t archetype_id) {
+uint32_t entity_init(Context *ctx, uint32_t archetype_id, uint32_t flags) {
     Ecs* ecs = &ctx->ecs;
     Archetype* arch = &ecs->archetypes.archetypes[archetype_id];
     
@@ -22,9 +22,10 @@ uint32_t entity_init(Context *ctx, uint32_t archetype_id) {
     Entity* entity = &ecs->entities[ecs->entity_count];
 
     entity->id = ecs->entity_count;
+    entity->generation = 0;
+    entity->flags = flags;
     entity->archetype_index = archetype_id;
-    entity->component_index = entity_index;
-    entity->alive = 1;
+    entity->archetype_entity_index = entity_index;
 
     ecs->entity_count++;
 
