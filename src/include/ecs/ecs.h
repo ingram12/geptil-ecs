@@ -10,20 +10,7 @@ typedef struct QueryArchetypeIndices {
     uint32_t count;
 } QueryArchetypeIndices;
 
-typedef struct Archetypes {
-    ComponentMask *component_masks; // индекс масок и архетипа совпадает
-    Archetype *archetypes; // индекс масок и архетипа совпадает
-    uint32_t archetype_count;
-    uint32_t archetype_capacity;
-
-    ComponentMask *query_masks; // индекс маски и запроса совпадает
-    QueryArchetypeIndices *query_archetype_indices; // индекс маски и запроса совпадает
-    uint32_t query_count;
-    uint32_t query_capacity;
-} Archetypes;
-
 typedef struct Entity {
-    uint32_t id;
     uint32_t generation;
     uint32_t flags;
     uint32_t archetype_index;
@@ -34,7 +21,16 @@ typedef struct Ecs {
     Entity *entities;
     uint32_t entity_count;
     uint32_t entity_capacity;
-    Archetypes archetypes;
+    
+    ComponentMask *component_masks; // индекс масок и архетипа совпадает
+    Archetype *archetypes; // индекс масок и архетипа совпадает
+    uint32_t archetype_count;
+    uint32_t archetype_capacity;
+
+    ComponentMask *query_masks; // индекс маски и запроса совпадает
+    QueryArchetypeIndices *query_archetype_indices; // индекс маски и запроса совпадает
+    uint32_t query_count;
+    uint32_t query_capacity;
 } Ecs;
 
 Ecs *init_ecs(Arena *arena, Ecs *ecs);
