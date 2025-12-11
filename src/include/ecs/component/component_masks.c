@@ -1,4 +1,4 @@
-#include "ecs.h"
+#include "../ecs.h"
 #include <string.h>
 
 ComponentMask build_component_masks(const ComponentIndex *components, const size_t count)
