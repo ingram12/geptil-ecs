@@ -3,7 +3,7 @@
 #include <stdalign.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/ecs/archetype/arhetype_init.h"
+#include "include/ecs/archetype/archetype_init.h"
 #include "include/ecs/component/components.gen.h"
 #include "include/ecs/entity/entity_init.h"
 

@@ -1,4 +1,4 @@
-#include "arhetype_init.h"
+#include "archetype_init.h"
 #include "../../logger/logger.h"
 #include "../../memory/arena.h"
 #include <string.h>

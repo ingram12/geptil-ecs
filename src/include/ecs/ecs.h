@@ -17,6 +17,11 @@ typedef struct Entity {
     uint32_t archetype_entity_index;
 } Entity;
 
+typedef struct EntityId {
+    uint32_t id;
+    uint32_t generation;
+} EntityId;
+
 typedef struct Ecs {
     Entity *entities;
     uint32_t entity_count;

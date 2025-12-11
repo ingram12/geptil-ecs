@@ -31,7 +31,7 @@ typedef struct Rotation {
 } Rotation;
 
 typedef struct Example {
-    int value;
+    uint32_t value;
 } Example;
 
 typedef struct Archetype {

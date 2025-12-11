@@ -1,4 +1,3 @@
-#include "../ecs.h"
 #pragma once
 
 #include "../../context.h"
