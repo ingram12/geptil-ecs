@@ -18,7 +18,7 @@ typedef struct Entity {
 } Entity;
 
 typedef struct EntityId {
-    uint32_t id;
+    uint32_t index;
     uint32_t generation;
 } EntityId;
 
