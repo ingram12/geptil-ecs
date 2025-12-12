@@ -27,7 +27,6 @@ void arena_init(Arena *a, size_t initial_capacity) {
     }
 
     a->capacity = initial_capacity;
-    a->grow_size = initial_capacity;
 }
 
 static int ensure_capacity(Arena *a, size_t needed) {
@@ -63,6 +62,41 @@ void *arena_alloc(Arena *a, size_t size) {
 	return arena_alloc_align(a, size, sizeof(void *));
 }
 
+void *arena_realloc(Arena *a, void *ptr, size_t old_size, size_t new_size) {
+    if (!a) {
+        LOG_FATAL("Arena pointer is NULL");
+    }
+
+    if (!ptr) {
+        return arena_alloc(a, new_size);
+    }
+
+    uintptr_t base = (uintptr_t)a->buffer;
+    uintptr_t p = (uintptr_t)ptr;
+
+    if (p < base || p >= base + a->used) {
+        LOG_FATAL("Pointer to realloc is out of arena bounds");
+    }
+
+    // Case 1 — block is last in arena (fast path)
+    if (p + old_size == base + a->used) {
+        if (new_size > old_size) {
+            size_t grow = new_size - old_size;
+            ensure_capacity(a, a->used + grow);
+            a->used += grow;
+        } else {
+            size_t shrink = old_size - new_size;
+            a->used -= shrink;
+        }
+        return ptr;
+    }
+
+    // Case 2 — must copy
+    void *new_ptr = arena_alloc(a, new_size);
+    memcpy(new_ptr, ptr, old_size < new_size ? old_size : new_size);
+    return new_ptr;
+}
+
 void arena_reset(Arena *a) {
 	if (a == NULL) {
         LOG_FATAL("Arena pointer is NULL");
@@ -79,7 +113,6 @@ void arena_destroy(Arena *a) {
 	a->buffer = NULL;
 	a->capacity = 0;
 	a->used = 0;
-	a->grow_size = 0;
 }
 
 size_t arena_used(const Arena *a) {
