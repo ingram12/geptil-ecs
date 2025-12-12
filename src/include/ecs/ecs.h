@@ -41,3 +41,7 @@ typedef struct Ecs {
 Ecs *init_ecs(Arena *arena, Ecs *ecs);
 
 ComponentMask build_component_masks(const ComponentIndex *components, const size_t count);
+
+Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id);
+Archetype* get_archetype_by_id(const Ecs *ecs, const uint32_t archetype_id);
+Archetype* get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask);

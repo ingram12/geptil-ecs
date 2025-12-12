@@ -1,34 +1,49 @@
 #include "query.h"
+#include "../../logger/logger.h"
 
-Entity* get_entity_by_id(const Context *ctx, const EntityId entity_id) {
-    Entity* entity = &ctx->ecs.entities[entity_id.index];
-    if (entity->generation != entity_id.generation) {
-        return NULL;
-    }
-
-    return entity;
-}
-
-Archetype* get_archetype_by_id(const Context *ctx, const uint32_t archetype_id) {
-    if (archetype_id >= ctx->ecs.archetype_count) {
-        return NULL;
-    }
-
-    return &ctx->ecs.archetypes[archetype_id];
-}
-
-Archetype* get_archetype_by_component_mask(const Context *ctx, const ComponentMask component_mask) {
-    const Ecs* ecs = &ctx->ecs;
-    for (size_t i = 0; i < ecs->archetype_count; ++i) {
+uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) {
+    // Check if a query with the same component mask already exists
+    for (uint32_t i = 0; i < ecs->query_count; ++i) {
+        char match = 1;
         for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
-            if (ecs->component_masks[i].mask[j] != component_mask.mask[j]) {
+            if (ecs->query_masks[i].mask[j] != component_mask.mask[j]) {
+                match = 0;
                 break;
             }
-            if (j == COMPONENT_MASK_COUNT - 1) {
-                return &ecs->archetypes[i];
-            }
+        }
+        if (match) {
+            return i; // Return existing query index
         }
     }
 
-    return NULL;
+    // If not found, create a new query
+    if (ecs->query_count >= ecs->query_capacity) {
+        // TODO: Resize if needed!!!
+        LOG_FATAL("Exceeded maximum number of queries");
+    }
+
+    uint32_t query_index = ecs->query_count++;
+    ecs->query_masks[query_index] = component_mask;
+
+    // Find matching archetypes for the new query
+    QueryArchetypeIndices *query_indices = &ecs->query_archetype_indices[query_index];
+    query_indices->indices = arena_alloc(arena, sizeof(uint32_t) * 64);
+    query_indices->count = 0;
+
+    for (uint32_t i = 0; i < ecs->archetype_count; ++i) {
+        char matches = 1;
+        for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
+            if ((ecs->component_masks[i].mask[j] & component_mask.mask[j]) != component_mask.mask[j]) {
+                matches = 0;
+                break;
+            }
+        }
+        if (matches) {
+            // Add archetype index to the query's archetype indices
+            // TODO: Resize if needed!!!
+            query_indices->indices[query_indices->count++] = i;
+        }
+    }
+
+    return query_index;
 }
