@@ -24,5 +24,13 @@ int main(int argc, char **argv) {
 
     Entity *entity = get_entity_by_id(&ctx, entity_id);
 
+    Position *pos = &ctx.ecs.archetypes[entity->archetype_index].positions[entity->archetype_entity_index];
+
+    pos->x = 1.0;
+    pos->y = 2.0;
+    pos->z = 3.0;
+
+    Archetype *arch = get_archetype_by_id(&ctx, entity->archetype_index);
+
     return EXIT_SUCCESS;
 }
