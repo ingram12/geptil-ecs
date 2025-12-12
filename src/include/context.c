@@ -6,7 +6,7 @@
 void init_context(Context *context)
 {
     if (!context) {
-        LOG_FATAL("Failed to allocate memory for Context");
+        LOG_FATAL("Context pointer is NULL");
     };
 
     arena_init(&context->arena, 1024 * 1024 * 10); // 10 MB
