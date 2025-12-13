@@ -1,7 +1,7 @@
 #include "query.h"
 
 void grow_query_indices(Arena *arena, QueryArchetypeIndices *query_indices) {   
-    query_indices->indices = arena_realloc(
+    query_indices->indices = (uint32_t *)arena_realloc(
         arena,
         query_indices->indices,
         sizeof(uint32_t) * query_indices->capacity,
@@ -11,14 +11,14 @@ void grow_query_indices(Arena *arena, QueryArchetypeIndices *query_indices) {
 }
 
 void grow_query(Arena *arena, Ecs *ecs) {
-    ecs->query_masks = arena_realloc(
+    ecs->query_masks = (ComponentMask *)arena_realloc(
         arena, 
         ecs->query_masks, 
         sizeof(ComponentMask) * ecs->query_capacity,
         sizeof(ComponentMask) * (ecs->query_capacity * 2)
     );
 
-    ecs->query_archetype_indices = arena_realloc(
+    ecs->query_archetype_indices = (QueryArchetypeIndices *)arena_realloc(
         arena,
         ecs->query_archetype_indices,
         sizeof(QueryArchetypeIndices) * ecs->query_capacity,

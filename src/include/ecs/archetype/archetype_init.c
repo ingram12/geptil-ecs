@@ -1,7 +1,24 @@
 #include "archetype_init.h"
-#include "../../logger/logger.h"
 #include "../../memory/arena.h"
 #include <string.h>
+
+void grow_archetype(Context *ctx, Ecs *ecs) {
+    ecs->archetypes = (Archetype *)arena_realloc(
+        &ctx->arena,
+        ecs->archetypes,
+        sizeof(Archetype) * ecs->archetype_capacity,
+        sizeof(Archetype) * ecs->archetype_capacity * 2
+    );
+    
+    ecs->component_masks = (ComponentMask *)arena_realloc(
+        &ctx->arena,
+        ecs->component_masks,
+        sizeof(ComponentMask) * ecs->archetype_capacity,
+        sizeof(ComponentMask) * ecs->archetype_capacity * 2
+    );
+
+    ecs->archetype_capacity *= 2;
+}
 
 uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t component_count) {
     Arena* arena = &ctx->arena;
@@ -21,11 +38,10 @@ uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t c
         }
     }
 
-    // If archetype capacity is exceeded, log fatal error
     if (ecs->archetype_count >= ecs->archetype_capacity) {
-        LOG_FATAL("Exceeded maximum number of archetypes");
-        return 0;
+        grow_archetype(ctx, ecs);
     }
+
     // Add a new archetype
     size_t index = ecs->archetype_count;
     ecs->component_masks[index] = component_mask;
