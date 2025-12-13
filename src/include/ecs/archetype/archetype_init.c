@@ -20,11 +20,9 @@ void grow_archetype(Context *ctx, Ecs *ecs) {
     ecs->archetype_capacity *= 2;
 }
 
-uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t component_count) {
+uint32_t archetype_init(Context *ctx, ComponentMask component_mask) {
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
-
-    ComponentMask component_mask = build_component_mask(components, component_count);
 
     // Check if an archetype with this mask already exists
     for (size_t i = 0; i < ecs->archetype_count; ++i) {

@@ -15,14 +15,17 @@ int main(int argc, char **argv) {
     init_context(&ctx);
 
     const ComponentIndex components[] = {COMP_POSITION, COMP_EXAMPLE};
-    archetype_init(&ctx, components, sizeof(components) / sizeof(components[0]));
+    ComponentMask component_mask = build_component_mask(components, sizeof(components) / sizeof(components[0]));
+    archetype_init(&ctx, component_mask);
 
     const ComponentIndex comp1[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
-    uint32_t archetype_id = archetype_init(&ctx, comp1, sizeof(comp1) / sizeof(comp1[0]));
+    ComponentMask component_mask1 = build_component_mask(comp1, sizeof(comp1) / sizeof(comp1[0]));
+    uint32_t archetype_id = archetype_init(&ctx, component_mask1);
+
 
     EntityId entity_id = entity_init(&ctx, archetype_id, 0);
 
-    Entity *entity = get_entity_by_id(&ctx, entity_id);
+    Entity *entity = get_entity_by_id(&ctx.ecs, entity_id);
 
     Position *pos = &ctx.ecs.archetypes[entity->archetype_index].positions[entity->archetype_entity_index];
 
@@ -30,7 +33,7 @@ int main(int argc, char **argv) {
     pos->y = 2.0;
     pos->z = 3.0;
 
-    Archetype *arch = get_archetype_by_id(&ctx, entity->archetype_index);
+    Archetype *arch = get_archetype_by_id(&ctx.ecs, entity->archetype_index);
 
     return EXIT_SUCCESS;
 }
