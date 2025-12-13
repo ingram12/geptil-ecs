@@ -24,7 +24,7 @@ uint32_t archetype_init(Context *ctx, const ComponentIndex *components, size_t c
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
 
-    ComponentMask component_mask = build_component_masks(components, component_count);
+    ComponentMask component_mask = build_component_mask(components, component_count);
 
     // Check if an archetype with this mask already exists
     for (size_t i = 0; i < ecs->archetype_count; ++i) {
