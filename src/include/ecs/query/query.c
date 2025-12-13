@@ -75,7 +75,7 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
     return query_index;
 }
 
-void rematch_all_queries(Ecs *ecs, Arena *arena) {
+void rematch_all_queries(Arena *arena, Ecs *ecs) {
     for (uint32_t q = 0; q < ecs->query_count; ++q) {
         ComponentMask component_mask = ecs->query_masks[q];
         QueryArchetypeIndices *query_indices = &ecs->query_archetype_indices[q];
