@@ -1,5 +1,32 @@
 #include "query.h"
-#include "../../logger/logger.h"
+
+void grow_query_indices(Arena *arena, QueryArchetypeIndices *query_indices) {   
+    query_indices->indices = arena_realloc(
+        arena,
+        query_indices->indices,
+        sizeof(uint32_t) * query_indices->capacity,
+        sizeof(uint32_t) * (query_indices->capacity * 2)
+    );
+    query_indices->capacity *= 2;    
+}
+
+void grow_query(Arena *arena, Ecs *ecs) {
+    ecs->query_masks = arena_realloc(
+        arena, 
+        ecs->query_masks, 
+        sizeof(ComponentMask) * ecs->query_capacity,
+        sizeof(ComponentMask) * (ecs->query_capacity * 2)
+    );
+
+    ecs->query_archetype_indices = arena_realloc(
+        arena,
+        ecs->query_archetype_indices,
+        sizeof(QueryArchetypeIndices) * ecs->query_capacity,
+        sizeof(QueryArchetypeIndices) * (ecs->query_capacity * 2)
+    );
+
+    ecs->query_capacity *= 2;
+}
 
 uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) {
     for (uint32_t i = 0; i < ecs->query_count; ++i) {
@@ -16,8 +43,7 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
     }
 
     if (ecs->query_count >= ecs->query_capacity) {
-        // TODO: Resize if needed!!!
-        LOG_FATAL("Exceeded maximum number of queries");
+        grow_query(arena, ecs);
     }
 
     uint32_t query_index = ecs->query_count++;
@@ -25,8 +51,9 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
 
     // Find matching archetypes for the new query
     QueryArchetypeIndices *query_indices = &ecs->query_archetype_indices[query_index];
-    query_indices->indices = arena_alloc(arena, sizeof(uint32_t) * 64);
     query_indices->count = 0;
+    query_indices->capacity = 64;
+    query_indices->indices = arena_alloc(arena, sizeof(uint32_t) * query_indices->capacity);
 
     for (uint32_t i = 0; i < ecs->archetype_count; ++i) {
         char matches = 1;
@@ -37,8 +64,10 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
             }
         }
         if (matches) {
-            // Add archetype index to the query's archetype indices
-            // TODO: Resize if needed!!!
+            if (query_indices->count >= query_indices->capacity) {
+                grow_query_indices(arena, query_indices);
+            }
+
             query_indices->indices[query_indices->count++] = i;
         }
     }
@@ -63,8 +92,10 @@ void rematch_all_queries(Ecs *ecs, Arena *arena) {
                 }
             }
             if (matches) {
-                // Add archetype index to the query's archetype indices
-                // TODO: Resize if needed!!!
+                if (query_indices->count >= query_indices->capacity) {
+                    grow_query_indices(arena, query_indices);
+                }
+
                 query_indices->indices[query_indices->count++] = i;
             }
         }

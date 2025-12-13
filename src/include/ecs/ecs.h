@@ -8,6 +8,7 @@
 typedef struct QueryArchetypeIndices {
     uint32_t *indices;
     uint32_t count;
+    uint32_t capacity;
 } QueryArchetypeIndices;
 
 typedef struct Entity {
