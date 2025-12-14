@@ -4,20 +4,20 @@
 
 void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity)
 {
-    arch->positions = (component_mask.mask[0] & (1ULL << COMP_POSITION)) ? (Position *)arena_alloc(arena, sizeof(Position) * capacity) : NULL;
-    arch->rotations = (component_mask.mask[0] & (1ULL << COMP_ROTATION)) ? (Rotation *)arena_alloc(arena, sizeof(Rotation) * capacity) : NULL;
-    arch->examples = (component_mask.mask[0] & (1ULL << COMP_EXAMPLE)) ? (Example *)arena_alloc(arena, sizeof(Example) * capacity) : NULL;
+    arch->positions = (component_mask.mask[0] & (1ULL << (COMP_POSITION % 64))) ? (Position *)arena_alloc(arena, sizeof(Position) * capacity) : NULL;
+    arch->rotations = (component_mask.mask[0] & (1ULL << (COMP_ROTATION % 64))) ? (Rotation *)arena_alloc(arena, sizeof(Rotation) * capacity) : NULL;
+    arch->examples = (component_mask.mask[0] & (1ULL << (COMP_EXAMPLE % 64))) ? (Example *)arena_alloc(arena, sizeof(Example) * capacity) : NULL;
 }
 
 void archetype_grow_capacity(Arena *arena, Archetype *arch)
 {
     arch->entities = (u32 *)arena_realloc(
         arena,
-        arch->entities,
-        sizeof(u32) * arch->entity_capacity,
+        arch->entities,        sizeof(u32) * arch->entity_capacity,
         sizeof(u32) * arch->entity_capacity * 2
     );
 
+    // Reallocate component arrays
     if (arch->positions) {
         arch->positions = (Position *)arena_realloc(
             arena,
@@ -42,6 +42,6 @@ void archetype_grow_capacity(Arena *arena, Archetype *arch)
             sizeof(Example) * arch->entity_capacity * 2
         );
     }
-
     arch->entity_capacity *= 2;
 }
+

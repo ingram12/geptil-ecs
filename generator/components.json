@@ -3,18 +3,24 @@
     {
       "name": "Position",
       "fields": [
-        { "name": "x", "type": "float" },
-        { "name": "y", "type": "float" },
-        { "name": "z", "type": "float" }
+        { "name": "x", "type": "f64" },
+        { "name": "y", "type": "f64" },
+        { "name": "z", "type": "f64" }
       ]
     },
     {
       "name": "Rotation",
       "fields": [
-        { "name": "w", "type": "float" },
-        { "name": "x", "type": "float" },
-        { "name": "y", "type": "float" },
-        { "name": "z", "type": "float" }
+        { "name": "w", "type": "f32" },
+        { "name": "x", "type": "f32" },
+        { "name": "y", "type": "f32" },
+        { "name": "z", "type": "f32" }
+      ]
+    },
+    {
+      "name": "Example",
+      "fields": [
+        { "name": "value", "type": "f64" }
       ]
     }
   ]
