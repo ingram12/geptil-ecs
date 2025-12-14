@@ -1,7 +1,5 @@
 #include "../memory/arena.h"
 #include "ecs.h"
-#include <stdint.h>
-#include <stdlib.h>
 
 Ecs *init_ecs(Arena *arena, Ecs *ecs)
 {

@@ -1,9 +1,4 @@
-/* Simple arena allocator with automatic growth using realloc
- * Provides fast bump allocation and expands the backing buffer
- * with realloc when there isn't enough space.
- */
-#ifndef GEPTIL_MEMORY_ARENA_H
-#define GEPTIL_MEMORY_ARENA_H
+#pragma once
 
 #include <stddef.h>
 
@@ -32,5 +27,3 @@ void arena_destroy(Arena *a);
 
 /* Convenience: current used bytes */
 size_t arena_used(const Arena *a);
-
-#endif /* GEPTIL_MEMORY_ARENA_H */

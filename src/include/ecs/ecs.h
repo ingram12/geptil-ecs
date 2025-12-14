@@ -2,8 +2,6 @@
 
 #include "../memory/arena.h"
 #include "component/components.gen.h"
-#include <stddef.h>
-#include <stdint.h>
 
 typedef struct QueryArchetypeIndices {
     u32 *indices;

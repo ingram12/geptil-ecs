@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-#include <stdint.h>
 #include "memory/arena.h"
 #include "ecs/ecs.h"
 
