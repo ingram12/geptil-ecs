@@ -1,8 +1,8 @@
 #include "../ecs.h"
 
-ComponentMask geptil_build_component_mask(const ComponentIndex *components, const size_t count)
+Geptil_ComponentMask geptil_build_component_mask(const ComponentIndex *components, const size_t count)
 {
-    ComponentMask out_mask = {0};
+    Geptil_ComponentMask out_mask = {0};
 
     for (size_t i = 0; i < count; ++i) {
         u32 comp = components[i];

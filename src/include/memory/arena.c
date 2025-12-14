@@ -7,7 +7,7 @@ static inline uintptr_t align_up(uintptr_t ptr, size_t alignment) {
     return (ptr + (alignment - 1)) & ~(alignment - 1);
 }
 
-void geptil_arena_init(Arena *a, size_t initial_capacity) {
+void geptil_arena_init(Geptil_Arena *a, size_t initial_capacity) {
 	if (a == NULL) {
         LOG_FATAL("Arena pointer is NULL");
     }
@@ -27,7 +27,7 @@ void geptil_arena_init(Arena *a, size_t initial_capacity) {
     a->capacity = initial_capacity;
 }
 
-static int ensure_capacity(Arena *a, size_t needed) {
+static int ensure_capacity(Geptil_Arena *a, size_t needed) {
 	if (a->capacity >= needed) {
         return 0;
     }
@@ -37,7 +37,7 @@ static int ensure_capacity(Arena *a, size_t needed) {
 	return 1;
 }
 
-void *geptil_arena_alloc_align(Arena *a, size_t size, size_t alignment) {
+void *geptil_arena_alloc_align(Geptil_Arena *a, size_t size, size_t alignment) {
     if (a == NULL) {
         LOG_FATAL("Arena pointer is NULL");
     }
@@ -56,11 +56,11 @@ void *geptil_arena_alloc_align(Arena *a, size_t size, size_t alignment) {
     return ptr;
 }
 
-void *geptil_arena_alloc(Arena *a, size_t size) {
+void *geptil_arena_alloc(Geptil_Arena *a, size_t size) {
 	return geptil_arena_alloc_align(a, size, sizeof(void *));
 }
 
-void *geptil_arena_realloc(Arena *a, void *ptr, size_t old_size, size_t new_size) {
+void *geptil_arena_realloc(Geptil_Arena *a, void *ptr, size_t old_size, size_t new_size) {
     if (!a) {
         LOG_FATAL("Arena pointer is NULL");
     }
@@ -95,14 +95,14 @@ void *geptil_arena_realloc(Arena *a, void *ptr, size_t old_size, size_t new_size
     return new_ptr;
 }
 
-void geptil_arena_reset(Arena *a) {
+void geptil_arena_reset(Geptil_Arena *a) {
 	if (a == NULL) {
         LOG_FATAL("Arena pointer is NULL");
     }
 	a->used = 0;
 }
 
-void geptil_arena_destroy(Arena *a) {
+void geptil_arena_destroy(Geptil_Arena *a) {
 	if (a == NULL) {
         LOG_FATAL("Arena pointer is NULL");
     }
@@ -113,6 +113,6 @@ void geptil_arena_destroy(Arena *a) {
 	a->used = 0;
 }
 
-size_t geptil_arena_used(const Arena *a) {
+size_t geptil_arena_used(const Geptil_Arena *a) {
 	return a ? a->used : 0;
 }

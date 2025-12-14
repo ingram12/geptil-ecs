@@ -1,7 +1,7 @@
 #include "context.h"
 #include "logger/logger.h"
 
-void geptil_init_context(Context *context)
+void geptil_init_context(Geptil_Context *context)
 {
     if (!context) {
         LOG_FATAL("Context pointer is NULL");
@@ -11,7 +11,7 @@ void geptil_init_context(Context *context)
     geptil_init_ecs(&context->arena, &context->ecs);
 }
 
-void geptil_destroy_context(Context *context)
+void geptil_destroy_context(Geptil_Context *context)
 {
     if (!context)
         return;

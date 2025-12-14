@@ -28,9 +28,9 @@ def generate_header(data):
     out.append(f"#define COMPONENT_COUNT {len(data['components'])}\n")
     out.append(f"#define COMPONENT_MASK_COUNT {(len(data['components']) + 63) // 64}\n\n")
 
-    out.append("typedef struct ComponentMask {\n")
+    out.append("typedef struct Geptil_ComponentMask {\n")
     out.append("    uint64_t mask[COMPONENT_MASK_COUNT];\n")
-    out.append("} ComponentMask;\n\n")
+    out.append("} Geptil_ComponentMask;\n\n")
 
     # enum for component index
     out.append("typedef enum {\n")
@@ -40,24 +40,24 @@ def generate_header(data):
 
     # Component structs
     for comp in data["components"]:
-        out.append(f"typedef struct {comp['name']} {{\n")
+        out.append(f"typedef struct Geptil_{comp['name']} {{\n")
         for field in comp["fields"]:
             out.append(f"    {field['type']} {field['name']};\n")
-        out.append(f"}} {comp['name']};\n\n")
+        out.append(f"}} Geptil_{comp['name']};\n\n")
 
-    out.append("typedef struct Archetype {\n")
+    out.append("typedef struct Geptil_Archetype {\n")
     out.append("    uint32_t entity_count;\n")
     out.append("    uint32_t entity_capacity;\n\n")
 
     out.append("    uint32_t *entities;\n")
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
-        out.append(f"    {comp['name']} *{var_name};\n")
-    out.append("} Archetype;\n\n")
+        out.append(f"    Geptil_{comp['name']} *{var_name};\n")
+    out.append("} Geptil_Archetype;\n\n")
 
 
-    out.append("void geptil_components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);\n")
-    out.append("void geptil_archetype_grow_capacity(Arena *arena, Archetype *arch);\n")
+    out.append("void geptil_components_storage_init(Geptil_Arena *arena, Geptil_Archetype *arch, Geptil_ComponentMask component_mask, u32 capacity);\n")
+    out.append("void geptil_archetype_grow_capacity(Geptil_Arena *arena, Geptil_Archetype *arch);\n")
 
     return "".join(out)
 
@@ -65,14 +65,14 @@ def generate_source(data):
     out = []
     out.append("// AUTO-GENERATED FILE BY gen_components.py\n\n")
     out.append('#include "components.gen.h"\n\n')
-    out.append("void geptil_components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity)\n{\n")
+    out.append("void geptil_components_storage_init(Geptil_Arena *arena, Geptil_Archetype *arch, Geptil_ComponentMask component_mask, u32 capacity)\n{\n")
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
         mask_index = data['components'].index(comp) // 64
-        out.append(f"    arch->{var_name} = (component_mask.mask[{mask_index}] & (1ULL << (COMP_{comp['name'].upper()} % 64))) ? ({comp['name']} *)geptil_arena_alloc(arena, sizeof({comp['name']}) * capacity) : NULL;\n")
+        out.append(f"    arch->{var_name} = (component_mask.mask[{mask_index}] & (1ULL << (COMP_{comp['name'].upper()} % 64))) ? (Geptil_{comp['name']} *)geptil_arena_alloc(arena, sizeof(Geptil_{comp['name']}) * capacity) : NULL;\n")
     out.append("}\n\n")
 
-    out.append("void geptil_archetype_grow_capacity(Arena *arena, Archetype *arch)\n{\n")
+    out.append("void geptil_archetype_grow_capacity(Geptil_Arena *arena, Geptil_Archetype *arch)\n{\n")
     out.append("    arch->entities = (u32 *)geptil_arena_realloc(\n")
     out.append("        arena,\n")
     out.append("        arch->entities,")
@@ -85,11 +85,11 @@ def generate_source(data):
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
         out.append(f"    if (arch->{var_name}) {{\n")
-        out.append(f"        arch->{var_name} = ({comp['name']} *)geptil_arena_realloc(\n")
+        out.append(f"        arch->{var_name} = (Geptil_{comp['name']} *)geptil_arena_realloc(\n")
         out.append("            arena,\n")
         out.append(f"            arch->{var_name},\n")
-        out.append(f"            sizeof({comp['name']}) * arch->entity_capacity,\n")
-        out.append(f"            sizeof({comp['name']}) * arch->entity_capacity * 2\n")
+        out.append(f"            sizeof(Geptil_{comp['name']}) * arch->entity_capacity,\n")
+        out.append(f"            sizeof(Geptil_{comp['name']}) * arch->entity_capacity * 2\n")
         out.append("        );\n")
         out.append("    }\n")
 
