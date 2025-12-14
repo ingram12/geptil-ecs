@@ -28,13 +28,13 @@ typedef struct Ecs {
     u32 entity_count;
     u32 entity_capacity;
     
-    ComponentMask *component_masks; // индекс масок и архетипа совпадает
-    Archetype *archetypes; // индекс масок и архетипа совпадает
+    ComponentMask *component_masks; // component_masks and archetypes share the same index
+    Archetype *archetypes; // component_masks and archetypes share the same index
     u32 archetype_count;
     u32 archetype_capacity;
 
-    ComponentMask *query_masks; // индекс маски и запроса совпадает
-    QueryArchetypeIndices *query_archetype_indices; // индекс маски и запроса совпадает
+    ComponentMask *query_masks; // query_masks and query_archetype_indices share the same index
+    QueryArchetypeIndices *query_archetype_indices; // query_masks and query_archetype_indices share the same index
     u32 query_count;
     u32 query_capacity;
 } Ecs;

@@ -12,9 +12,9 @@ void grow_entity(Arena *arena, Ecs *ecs) {
     ecs->entity_capacity *= 2;
 }
 
-// Инициализация сущности в указанном архетипе.
-// archetype_id - Должен быть валидным ID архетипа. Архетип не проверяется на валидность.
-// Возвращает ID созданной сущности.
+// Initialize an entity in the specified archetype.
+// archetype_id - Must be a valid archetype ID. The archetype is not checked for validity.
+// Returns the ID of the created entity.
 EntityId entity_init(Context *ctx, u32 archetype_id, u32 flags) {
     Ecs* ecs = &ctx->ecs;
     Archetype* arch = &ecs->archetypes[archetype_id];
