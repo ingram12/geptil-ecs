@@ -24,7 +24,7 @@ EntityId entity_init(Context *ctx, u32 archetype_id, u32 flags) {
     }
     
     if (arch->entity_count >= arch->entity_capacity) {
-        grow_archtype_entity(&ctx->arena, arch);
+        archetype_grow_capacity(&ctx->arena, arch);
     }
 
     u32 entity_index = arch->entity_count;

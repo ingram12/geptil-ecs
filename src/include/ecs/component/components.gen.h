@@ -45,4 +45,4 @@ typedef struct Archetype {
 } Archetype;
 
 void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);
-void grow_archtype_entity(Arena *arena, Archetype *arch);
+void archetype_grow_capacity(Arena *arena, Archetype *arch);

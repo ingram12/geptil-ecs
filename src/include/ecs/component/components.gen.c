@@ -9,7 +9,7 @@ void components_storage_init(Arena *arena, Archetype *arch, ComponentMask compon
     arch->examples = (component_mask.mask[0] & (1ULL << COMP_EXAMPLE)) ? (Example *)arena_alloc(arena, sizeof(Example) * capacity) : NULL;
 }
 
-void grow_archtype_entity(Arena *arena, Archetype *arch)
+void archetype_grow_capacity(Arena *arena, Archetype *arch)
 {
     arch->entities = (u32 *)arena_realloc(
         arena,
