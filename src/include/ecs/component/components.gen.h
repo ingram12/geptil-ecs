@@ -8,9 +8,9 @@
 #define COMPONENT_COUNT 3
 #define COMPONENT_MASK_COUNT 1
 
-typedef struct ComponentMask {
+typedef struct Geptil_ComponentMask {
     uint64_t mask[COMPONENT_MASK_COUNT];
-} ComponentMask;
+} Geptil_ComponentMask;
 
 typedef enum {
     COMP_POSITION = 0,
@@ -18,32 +18,32 @@ typedef enum {
     COMP_EXAMPLE = 2,
 } ComponentIndex;
 
-typedef struct Position {
+typedef struct Geptil_Position {
     f64 x;
     f64 y;
     f64 z;
-} Position;
+} Geptil_Position;
 
-typedef struct Rotation {
+typedef struct Geptil_Rotation {
     f32 w;
     f32 x;
     f32 y;
     f32 z;
-} Rotation;
+} Geptil_Rotation;
 
-typedef struct Example {
+typedef struct Geptil_Example {
     f64 value;
-} Example;
+} Geptil_Example;
 
-typedef struct Archetype {
+typedef struct Geptil_Archetype {
     uint32_t entity_count;
     uint32_t entity_capacity;
 
     uint32_t *entities;
-    Position *positions;
-    Rotation *rotations;
-    Example *examples;
-} Archetype;
+    Geptil_Position *positions;
+    Geptil_Rotation *rotations;
+    Geptil_Example *examples;
+} Geptil_Archetype;
 
-void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);
-void archetype_grow_capacity(Arena *arena, Archetype *arch);
+void geptil_components_storage_init(Geptil_Arena *arena, Geptil_Archetype *arch, Geptil_ComponentMask component_mask, u32 capacity);
+void geptil_archetype_grow_capacity(Geptil_Arena *arena, Geptil_Archetype *arch);

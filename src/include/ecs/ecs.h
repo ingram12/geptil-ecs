@@ -3,44 +3,44 @@
 #include "../memory/arena.h"
 #include "component/components.gen.h"
 
-typedef struct QueryArchetypeIndices {
+typedef struct Geptil_QueryArchetypeIndices {
     u32 *indices;
     u32 count;
     u32 capacity;
-} QueryArchetypeIndices;
+} Geptil_QueryArchetypeIndices;
 
-typedef struct Entity {
+typedef struct Geptil_Entity {
     u32 generation;
     u32 flags;
     u32 archetype_index;
     u32 archetype_entity_index;
-} Entity;
+} Geptil_Entity;
 
-typedef struct EntityId {
+typedef struct Geptil_EntityId {
     u32 index;
     u32 generation;
-} EntityId;
+} Geptil_EntityId;
 
-typedef struct Ecs {
-    Entity *entities;
+typedef struct Geptil_Ecs {
+    Geptil_Entity *entities;
     u32 entity_count;
     u32 entity_capacity;
     
-    ComponentMask *component_masks; // component_masks and archetypes share the same index
-    Archetype *archetypes; // component_masks and archetypes share the same index
+    Geptil_ComponentMask *component_masks; // component_masks and archetypes share the same index
+    Geptil_Archetype *archetypes; // component_masks and archetypes share the same index
     u32 archetype_count;
     u32 archetype_capacity;
 
-    ComponentMask *query_masks; // query_masks and query_archetype_indices share the same index
-    QueryArchetypeIndices *query_archetype_indices; // query_masks and query_archetype_indices share the same index
+    Geptil_ComponentMask *query_masks; // query_masks and query_archetype_indices share the same index
+    Geptil_QueryArchetypeIndices *query_archetype_indices; // query_masks and query_archetype_indices share the same index
     u32 query_count;
     u32 query_capacity;
-} Ecs;
+} Geptil_Ecs;
 
-Ecs *init_ecs(Arena *arena, Ecs *ecs);
+Geptil_Ecs *geptil_init_ecs(Geptil_Arena *arena, Geptil_Ecs *ecs);
 
-ComponentMask build_component_mask(const ComponentIndex *components, const size_t count);
+Geptil_ComponentMask geptil_build_component_mask(const ComponentIndex *components, const size_t count);
 
-Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id);
-Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id);
-Archetype* get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask);
+Geptil_Entity* geptil_get_entity_by_id(const Geptil_Ecs *ecs, const Geptil_EntityId entity_id);
+Geptil_Archetype* geptil_get_archetype_by_id(const Geptil_Ecs *ecs, const u32 archetype_id);
+Geptil_Archetype* geptil_get_archetype_by_component_mask(const Geptil_Ecs *ecs, const Geptil_ComponentMask component_mask);

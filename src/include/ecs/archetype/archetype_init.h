@@ -3,4 +3,4 @@
 #include "../../context.h"
 #include "../ecs.h"
 
-u32 archetype_init(Context *ctx, ComponentMask component_mask);
+u32 geptil_archetype_init(Geptil_Context *ctx, Geptil_ComponentMask component_mask);
