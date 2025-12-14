@@ -20,7 +20,7 @@ void grow_archetype(Context *ctx, Ecs *ecs) {
     ecs->archetype_capacity *= 2;
 }
 
-uint32_t archetype_init(Context *ctx, ComponentMask component_mask) {
+u32 archetype_init(Context *ctx, ComponentMask component_mask) {
     Arena* arena = &ctx->arena;
     Ecs* ecs = &ctx->ecs;
 
@@ -47,7 +47,7 @@ uint32_t archetype_init(Context *ctx, ComponentMask component_mask) {
     Archetype *arch = &ecs->archetypes[index];
     arch->entity_count = 0;
     arch->entity_capacity = 256;
-    arch->entities = (uint32_t *)arena_alloc(arena, sizeof(uint32_t) * arch->entity_capacity);
+    arch->entities = (u32 *)arena_alloc(arena, sizeof(u32) * arch->entity_capacity);
 
     components_storage_init(arena, arch, ecs->component_masks[index], arch->entity_capacity);
 

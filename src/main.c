@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
     const ComponentIndex comp1[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
     ComponentMask component_mask1 = build_component_mask(comp1, sizeof(comp1) / sizeof(comp1[0]));
-    uint32_t archetype_id = archetype_init(&ctx, component_mask1);
+    u32 archetype_id = archetype_init(&ctx, component_mask1);
 
 
     EntityId entity_id = entity_init(&ctx, archetype_id, 0);

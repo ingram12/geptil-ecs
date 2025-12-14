@@ -6,37 +6,37 @@
 #include <stdint.h>
 
 typedef struct QueryArchetypeIndices {
-    uint32_t *indices;
-    uint32_t count;
-    uint32_t capacity;
+    u32 *indices;
+    u32 count;
+    u32 capacity;
 } QueryArchetypeIndices;
 
 typedef struct Entity {
-    uint32_t generation;
-    uint32_t flags;
-    uint32_t archetype_index;
-    uint32_t archetype_entity_index;
+    u32 generation;
+    u32 flags;
+    u32 archetype_index;
+    u32 archetype_entity_index;
 } Entity;
 
 typedef struct EntityId {
-    uint32_t index;
-    uint32_t generation;
+    u32 index;
+    u32 generation;
 } EntityId;
 
 typedef struct Ecs {
     Entity *entities;
-    uint32_t entity_count;
-    uint32_t entity_capacity;
+    u32 entity_count;
+    u32 entity_capacity;
     
     ComponentMask *component_masks; // индекс масок и архетипа совпадает
     Archetype *archetypes; // индекс масок и архетипа совпадает
-    uint32_t archetype_count;
-    uint32_t archetype_capacity;
+    u32 archetype_count;
+    u32 archetype_capacity;
 
     ComponentMask *query_masks; // индекс маски и запроса совпадает
     QueryArchetypeIndices *query_archetype_indices; // индекс маски и запроса совпадает
-    uint32_t query_count;
-    uint32_t query_capacity;
+    u32 query_count;
+    u32 query_capacity;
 } Ecs;
 
 Ecs *init_ecs(Arena *arena, Ecs *ecs);
@@ -44,5 +44,5 @@ Ecs *init_ecs(Arena *arena, Ecs *ecs);
 ComponentMask build_component_mask(const ComponentIndex *components, const size_t count);
 
 Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id);
-Archetype* get_archetype_by_id(const Ecs *ecs, const uint32_t archetype_id);
+Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id);
 Archetype* get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask);

@@ -1,11 +1,11 @@
 #include "query.h"
 
 void grow_query_indices(Arena *arena, QueryArchetypeIndices *query_indices) {   
-    query_indices->indices = (uint32_t *)arena_realloc(
+    query_indices->indices = (u32 *)arena_realloc(
         arena,
         query_indices->indices,
-        sizeof(uint32_t) * query_indices->capacity,
-        sizeof(uint32_t) * (query_indices->capacity * 2)
+        sizeof(u32) * query_indices->capacity,
+        sizeof(u32) * (query_indices->capacity * 2)
     );
     query_indices->capacity *= 2;    
 }
@@ -28,8 +28,8 @@ void grow_query(Arena *arena, Ecs *ecs) {
     ecs->query_capacity *= 2;
 }
 
-uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) {
-    for (uint32_t i = 0; i < ecs->query_count; ++i) {
+u32 init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) {
+    for (u32 i = 0; i < ecs->query_count; ++i) {
         char match = 1;
         for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
             if (ecs->query_masks[i].mask[j] != component_mask.mask[j]) {
@@ -46,16 +46,16 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
         grow_query(arena, ecs);
     }
 
-    uint32_t query_index = ecs->query_count++;
+    u32 query_index = ecs->query_count++;
     ecs->query_masks[query_index] = component_mask;
 
     // Find matching archetypes for the new query
     QueryArchetypeIndices *query_indices = &ecs->query_archetype_indices[query_index];
     query_indices->count = 0;
     query_indices->capacity = 64;
-    query_indices->indices = arena_alloc(arena, sizeof(uint32_t) * query_indices->capacity);
+    query_indices->indices = arena_alloc(arena, sizeof(u32) * query_indices->capacity);
 
-    for (uint32_t i = 0; i < ecs->archetype_count; ++i) {
+    for (u32 i = 0; i < ecs->archetype_count; ++i) {
         char matches = 1;
         for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
             if ((ecs->component_masks[i].mask[j] & component_mask.mask[j]) != component_mask.mask[j]) {
@@ -68,7 +68,7 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
                 grow_query_indices(arena, query_indices);
             }
 
-            query_indices->indices[query_indices->count++] = i;
+                query_indices->indices[query_indices->count++] = i;
         }
     }
 
@@ -76,14 +76,14 @@ uint32_t init_query(Arena *arena, Ecs *ecs, const ComponentMask component_mask) 
 }
 
 void rematch_all_queries(Arena *arena, Ecs *ecs) {
-    for (uint32_t q = 0; q < ecs->query_count; ++q) {
+    for (u32 q = 0; q < ecs->query_count; ++q) {
         ComponentMask component_mask = ecs->query_masks[q];
         QueryArchetypeIndices *query_indices = &ecs->query_archetype_indices[q];
 
         // Clear existing indices
         query_indices->count = 0;
 
-        for (uint32_t i = 0; i < ecs->archetype_count; ++i) {
+        for (u32 i = 0; i < ecs->archetype_count; ++i) {
             char matches = 1;
             for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
                 if ((ecs->component_masks[i].mask[j] & component_mask.mask[j]) != component_mask.mask[j]) {

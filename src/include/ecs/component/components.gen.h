@@ -1,14 +1,14 @@
 // AUTO-GENERATED FILE BY gen_components.py
 #pragma once
 
-#include <stdint.h>
+#include "../../core_types.h"
 #include "../../memory/arena.h"
 
 #define COMPONENT_COUNT 3
 #define COMPONENT_MASK_COUNT 1
 
 typedef struct {
-    uint64_t mask[COMPONENT_MASK_COUNT];
+    u64 mask[COMPONENT_MASK_COUNT];
 } ComponentMask;
 
 typedef enum {
@@ -18,31 +18,31 @@ typedef enum {
 } ComponentIndex;
 
 typedef struct Position {
-    double x;
-    double y;
-    double z;
+    f64 x;
+    f64 y;
+    f64 z;
 } Position;
 
 typedef struct Rotation {
-    float w;
-    float x;
-    float y;
-    float z;
+    f32 w;
+    f32 x;
+    f32 y;
+    f32 z;
 } Rotation;
 
 typedef struct Example {
-    uint32_t value;
+    u32 value;
 } Example;
 
 typedef struct Archetype {
-    uint32_t entity_count;
-    uint32_t entity_capacity;
+    u32 entity_count;
+    u32 entity_capacity;
 
-    uint32_t *entities;
+    u32 *entities;
     Position *positions;
     Rotation *rotations;
     Example *examples;
 } Archetype;
 
-void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, uint32_t capacity);
+void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);
 void grow_archtype_entity(Arena *arena, Archetype *arch);

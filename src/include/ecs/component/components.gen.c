@@ -2,7 +2,7 @@
 
 #include "components.gen.h"
 
-void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, uint32_t capacity)
+void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity)
 {
     arch->positions = (component_mask.mask[0] & (1ULL << COMP_POSITION)) ? (Position *)arena_alloc(arena, sizeof(Position) * capacity) : NULL;
     arch->rotations = (component_mask.mask[0] & (1ULL << COMP_ROTATION)) ? (Rotation *)arena_alloc(arena, sizeof(Rotation) * capacity) : NULL;
@@ -11,11 +11,11 @@ void components_storage_init(Arena *arena, Archetype *arch, ComponentMask compon
 
 void grow_archtype_entity(Arena *arena, Archetype *arch)
 {
-    arch->entities = (uint32_t *)arena_realloc(
+    arch->entities = (u32 *)arena_realloc(
         arena,
         arch->entities,
-        sizeof(uint32_t) * arch->entity_capacity,
-        sizeof(uint32_t) * arch->entity_capacity * 2
+        sizeof(u32) * arch->entity_capacity,
+        sizeof(u32) * arch->entity_capacity * 2
     );
 
     if (arch->positions) {

@@ -9,7 +9,7 @@ Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id) {
     return entity;
 }
 
-Archetype* get_archetype_by_id(const Ecs *ecs, const uint32_t archetype_id) {
+Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id) {
     if (archetype_id >= ecs->archetype_count) {
         return NULL;
     }
