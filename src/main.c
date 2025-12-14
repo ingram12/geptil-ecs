@@ -1,17 +1,16 @@
 #include "include/context.h"
 #include "include/project.h"
-#include <stdalign.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "include/ecs/archetype/archetype_init.h"
 #include "include/ecs/component/components.gen.h"
 #include "include/ecs/entity/entity_init.h"
 #include "include/ecs/query/query.h"
-
+#include "include/logger/logger.h"
 #include "systems/move.h"
 
+#include <stdlib.h>
+
 int main(int argc, char **argv) {
-    printf("%s %s\n", PROJECT_NAME, PROJECT_VERSION);
+    LOG_INFO("Starting %s version %s", PROJECT_NAME, PROJECT_VERSION);
 
     Context ctx = {0};
     init_context(&ctx);

@@ -1,6 +1,5 @@
 #include "archetype_init.h"
 #include "../../memory/arena.h"
-#include <string.h>
 
 void grow_archetype(Context *ctx, Ecs *ecs) {
     ecs->archetypes = (Archetype *)arena_realloc(

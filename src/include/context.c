@@ -1,7 +1,5 @@
 #include "context.h"
 #include "logger/logger.h"
-#include <stdint.h>
-#include <stdlib.h>
 
 void init_context(Context *context)
 {

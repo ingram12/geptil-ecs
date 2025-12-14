@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
-#include <assert.h>
 #include "arena.h"
 #include "../logger/logger.h"
 
