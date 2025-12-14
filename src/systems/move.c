@@ -1,6 +1,6 @@
 #include "move.h"
 
-void system_move(Context *ctx) {
+void geptil_system_move(Context *ctx) {
     Ecs *ecs = &ctx->ecs;
 
     u32 query_id = 0;

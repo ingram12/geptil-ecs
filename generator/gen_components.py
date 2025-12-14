@@ -56,8 +56,8 @@ def generate_header(data):
     out.append("} Archetype;\n\n")
 
 
-    out.append("void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);\n")
-    out.append("void archetype_grow_capacity(Arena *arena, Archetype *arch);\n")
+    out.append("void geptil_components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);\n")
+    out.append("void geptil_archetype_grow_capacity(Arena *arena, Archetype *arch);\n")
 
     return "".join(out)
 
@@ -65,15 +65,15 @@ def generate_source(data):
     out = []
     out.append("// AUTO-GENERATED FILE BY gen_components.py\n\n")
     out.append('#include "components.gen.h"\n\n')
-    out.append("void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity)\n{\n")
+    out.append("void geptil_components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity)\n{\n")
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
         mask_index = data['components'].index(comp) // 64
-        out.append(f"    arch->{var_name} = (component_mask.mask[{mask_index}] & (1ULL << (COMP_{comp['name'].upper()} % 64))) ? ({comp['name']} *)arena_alloc(arena, sizeof({comp['name']}) * capacity) : NULL;\n")
+        out.append(f"    arch->{var_name} = (component_mask.mask[{mask_index}] & (1ULL << (COMP_{comp['name'].upper()} % 64))) ? ({comp['name']} *)geptil_arena_alloc(arena, sizeof({comp['name']}) * capacity) : NULL;\n")
     out.append("}\n\n")
 
-    out.append("void archetype_grow_capacity(Arena *arena, Archetype *arch)\n{\n")
-    out.append("    arch->entities = (u32 *)arena_realloc(\n")
+    out.append("void geptil_archetype_grow_capacity(Arena *arena, Archetype *arch)\n{\n")
+    out.append("    arch->entities = (u32 *)geptil_arena_realloc(\n")
     out.append("        arena,\n")
     out.append("        arch->entities,")
     out.append("        sizeof(u32) * arch->entity_capacity,\n")
@@ -85,7 +85,7 @@ def generate_source(data):
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
         out.append(f"    if (arch->{var_name}) {{\n")
-        out.append(f"        arch->{var_name} = ({comp['name']} *)arena_realloc(\n")
+        out.append(f"        arch->{var_name} = ({comp['name']} *)geptil_arena_realloc(\n")
         out.append("            arena,\n")
         out.append(f"            arch->{var_name},\n")
         out.append(f"            sizeof({comp['name']}) * arch->entity_capacity,\n")

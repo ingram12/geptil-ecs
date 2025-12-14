@@ -2,4 +2,4 @@
 
 #include "../include/context.h"
 
-void system_move(Context *ctx);
+void geptil_system_move(Context *ctx);

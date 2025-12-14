@@ -1,6 +1,6 @@
 #include "../ecs.h"
 
-ComponentMask build_component_mask(const ComponentIndex *components, const size_t count)
+ComponentMask geptil_build_component_mask(const ComponentIndex *components, const size_t count)
 {
     ComponentMask out_mask = {0};
 

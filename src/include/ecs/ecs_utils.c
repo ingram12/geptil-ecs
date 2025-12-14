@@ -1,6 +1,6 @@
 #include "ecs.h"
 
-Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id) {
+Entity* geptil_get_entity_by_id(const Ecs *ecs, const EntityId entity_id) {
     Entity* entity = &ecs->entities[entity_id.index];
     if (entity->generation != entity_id.generation) {
         return NULL;
@@ -9,7 +9,7 @@ Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id) {
     return entity;
 }
 
-Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id) {
+Archetype* geptil_get_archetype_by_id(const Ecs *ecs, const u32 archetype_id) {
     if (archetype_id >= ecs->archetype_count) {
         return NULL;
     }
@@ -17,7 +17,7 @@ Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id) {
     return &ecs->archetypes[archetype_id];
 }
 
-Archetype* get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask) {
+Archetype* geptil_get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask) {
     for (size_t i = 0; i < ecs->archetype_count; ++i) {
         for (size_t j = 0; j < COMPONENT_MASK_COUNT; ++j) {
             if (ecs->component_masks[i].mask[j] != component_mask.mask[j]) {

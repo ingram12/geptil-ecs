@@ -8,5 +8,5 @@ typedef struct Context {
     Arena arena;
 } Context;
 
-void init_context(Context *context);
-void destroy_context(Context* context);
+void geptil_init_context(Context *context);
+void geptil_destroy_context(Context* context);

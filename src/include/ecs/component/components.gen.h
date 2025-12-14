@@ -45,5 +45,5 @@ typedef struct Archetype {
     Example *examples;
 } Archetype;
 
-void components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);
-void archetype_grow_capacity(Arena *arena, Archetype *arch);
+void geptil_components_storage_init(Arena *arena, Archetype *arch, ComponentMask component_mask, u32 capacity);
+void geptil_archetype_grow_capacity(Arena *arena, Archetype *arch);

@@ -37,10 +37,10 @@ typedef struct Ecs {
     u32 query_capacity;
 } Ecs;
 
-Ecs *init_ecs(Arena *arena, Ecs *ecs);
+Ecs *geptil_init_ecs(Arena *arena, Ecs *ecs);
 
-ComponentMask build_component_mask(const ComponentIndex *components, const size_t count);
+ComponentMask geptil_build_component_mask(const ComponentIndex *components, const size_t count);
 
-Entity* get_entity_by_id(const Ecs *ecs, const EntityId entity_id);
-Archetype* get_archetype_by_id(const Ecs *ecs, const u32 archetype_id);
-Archetype* get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask);
+Entity* geptil_get_entity_by_id(const Ecs *ecs, const EntityId entity_id);
+Archetype* geptil_get_archetype_by_id(const Ecs *ecs, const u32 archetype_id);
+Archetype* geptil_get_archetype_by_component_mask(const Ecs *ecs, const ComponentMask component_mask);
