@@ -1,0 +1,25 @@
+#include "../logger/logger.h"
+#include "../vulkan/vulkan_context.h"
+
+VkResult initWindow(Geptil_VulkanContext* ctx, u32 width, u32 height) {
+    glfwInit();
+
+    #ifdef __APPLE__
+        glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    #endif
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    ctx->window = glfwCreateWindow(width, height, "geptil", NULL, NULL);
+    if (!ctx->window) {
+        LOG_ERROR("Failed to create GLFW window");
+        return VK_ERROR_INITIALIZATION_FAILED;
+    }
+
+    LOG_INFO("Window created successfully");
+    return VK_SUCCESS;
+}

@@ -6,7 +6,7 @@
 #include "include/ecs/query/query.h"
 #include "include/logger/logger.h"
 #include "systems/move.h"
-
+#include "include/vulkan/vulkan_draw.h"
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
@@ -39,6 +39,12 @@ int main(int argc, char **argv) {
     u32 query_id = geptil_init_query(&ctx.arena, &ctx.ecs, component_mask2);
 
     geptil_system_move(&ctx);
+
+    Geptil_VulkanContext vk_ctx = ctx.vulkan;
+    while (!glfwWindowShouldClose(vk_ctx.window)) {
+        glfwPollEvents();
+        draw_frame(&vk_ctx);
+    }
 
     return EXIT_SUCCESS;
 }
