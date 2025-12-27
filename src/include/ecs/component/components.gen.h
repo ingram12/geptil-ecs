@@ -36,10 +36,10 @@ typedef struct Geptil_Example {
 } Geptil_Example;
 
 typedef struct Geptil_Archetype {
-    uint32_t entity_count;
-    uint32_t entity_capacity;
+    u32 entity_count;
+    u32 entity_capacity;
 
-    uint32_t *entities;
+    u32 *entities;
     Geptil_Position *positions;
     Geptil_Rotation *rotations;
     Geptil_Example *examples;
