@@ -1,6 +1,7 @@
 #include "context.h"
 #include "logger/logger.h"
 #include "vulkan/vulkan_init.h"
+#include <GLFW/glfw3.h>
 
 void geptil_init_context(Geptil_Context *context)
 {
@@ -55,4 +56,27 @@ void geptil_destroy_context(Geptil_Context *context)
     if (!context)
         return;
     geptil_arena_destroy(&context->arena);
+}
+
+void geptil_time_update(Geptil_Context *context)
+{
+    if (!context) return;
+
+    double now = glfwGetTime();
+    Geptil_Time *t = &context->time;
+
+    // On first call, initialize last tick to current time.
+    if (t->_last_ticks == 0.0) {
+        t->_last_ticks = now;
+        t->dt = 0.0f;
+        // Keep accumulated time and frame index consistent
+        // (assumes zero-initialization from context creation).
+        return;
+    }
+
+    double delta = now - t->_last_ticks;
+    t->dt = (float)delta;
+    t->time += delta;
+    t->frame_index++;
+    t->_last_ticks = now;
 }

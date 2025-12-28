@@ -1,0 +1,30 @@
+#include "state_init.h"
+#include "ecs/archetype/archetype_init.h"
+#include "ecs/component/components.gen.h"
+#include "ecs/entity/entity_init.h"
+#include "ecs/query/query.h"
+
+void geptil_world_init(Geptil_Context *ctx) {
+    const ComponentIndex components[] = {COMP_POSITION, COMP_EXAMPLE};
+    Geptil_ComponentMask component_mask = geptil_build_component_mask(components, sizeof(components) / sizeof(components[0]));
+    u32 archetype_id1 = geptil_archetype_init(ctx, component_mask);
+
+    const ComponentIndex comp1[] = {COMP_POSITION, COMP_ROTATION, COMP_EXAMPLE};
+    Geptil_ComponentMask component_mask1 = geptil_build_component_mask(comp1, sizeof(comp1) / sizeof(comp1[0]));
+    u32 archetype_id = geptil_archetype_init(ctx, component_mask1);
+
+
+    Geptil_EntityId entity_id = geptil_entity_init(ctx, archetype_id, 0);
+    geptil_entity_init(ctx, archetype_id1, 0);
+    geptil_entity_init(ctx, archetype_id1, 0);
+
+    Geptil_Entity *entity = geptil_get_entity_by_id(&ctx->ecs, entity_id);
+
+    Geptil_Position *pos = &ctx->ecs.archetypes[entity->archetype_index].positions[entity->archetype_entity_index];
+
+    Geptil_Archetype *arch = geptil_get_archetype_by_id(&ctx->ecs, entity->archetype_index);
+
+    const ComponentIndex comp2[] = {COMP_POSITION};
+    Geptil_ComponentMask component_mask2 = geptil_build_component_mask(comp2, sizeof(comp2) / sizeof(comp2[0]));
+    u32 query_id = geptil_init_query(&ctx->arena, &ctx->ecs, component_mask2);
+}
