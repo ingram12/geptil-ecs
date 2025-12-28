@@ -46,10 +46,10 @@ def generate_header(data):
         out.append(f"}} Geptil_{comp['name']};\n\n")
 
     out.append("typedef struct Geptil_Archetype {\n")
-    out.append("    uint32_t entity_count;\n")
-    out.append("    uint32_t entity_capacity;\n\n")
+    out.append("    u32 entity_count;\n")
+    out.append("    u32 entity_capacity;\n\n")
 
-    out.append("    uint32_t *entities;\n")
+    out.append("    u32 *entities;\n")
     for comp in data["components"]:
         var_name = pluralize(comp['name'].lower())
         out.append(f"    Geptil_{comp['name']} *{var_name};\n")

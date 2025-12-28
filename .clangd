@@ -1,0 +1,10 @@
+CompileFlags:
+  Add: [
+    -x,
+    c, 
+    -std=c17, 
+    -Iinclude, 
+    -I/opt/homebrew/Cellar/glfw/3.4/include, 
+    -I/Users/ingram/VulkanSDK/1.3.268.1/macOS/include, 
+    -I/opt/homebrew/opt/freetype/include/freetype2
+  ]
