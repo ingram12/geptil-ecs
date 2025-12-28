@@ -4,6 +4,7 @@
 #include "include/state_init.h"
 #include "include/vulkan/vulkan_draw.h"
 #include "include/ecs_tick.h"
+#include "include/time/time.h"
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
@@ -17,7 +18,7 @@ int main(int argc, char **argv) {
     Geptil_VulkanContext *vk_ctx = &ctx.vulkan;
     while (!glfwWindowShouldClose(vk_ctx->window)) {
         glfwPollEvents();
-        geptil_time_update(&ctx);
+        geptil_time_update(&ctx.time);
         geptil_ecs_tick(&ctx);
         draw_frame(vk_ctx);
     }
