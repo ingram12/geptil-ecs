@@ -1,6 +1,8 @@
 #include "context.h"
 #include "logger/logger.h"
 #include "vulkan/vulkan_init.h"
+#include <GLFW/glfw3.h>
+#include "time/time.h"
 
 void geptil_init_context(Geptil_Context *context)
 {
@@ -10,8 +12,9 @@ void geptil_init_context(Geptil_Context *context)
 
     geptil_arena_init(&context->arena, 1024 * 1024 * 10); // 10 MB
     geptil_init_ecs(&context->arena, &context->ecs);
+    geptil_time_init(&context->time, 1.0 / 60.0);
 
-        // Cube vertices: position (x,y,z) and color (r,g,b)
+    // Cube vertices: position (x,y,z) and color (r,g,b)
     static Vertex vertices[] = {
         // Front face
         { {-0.5f, -0.5f,  0.5f}, {1.0f, 0.0f, 0.0f} },  // 0
