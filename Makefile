@@ -29,8 +29,7 @@ $(SHADER_DIR)/%.spv: $(SHADER_DIR)/%
 	glslangValidator -V $< -o $@
 
 ifeq ($(DEBUG),1)
-CFLAGS += -O0 -g -fno-omit-frame-pointer $(SANITIZERS)
-LDFLAGS += $(SANITIZERS)
+CFLAGS += -O0 -g -fno-omit-frame-pointer -fno-inline
 else
 CFLAGS += -O2 -march=native
 endif
