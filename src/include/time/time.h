@@ -4,20 +4,20 @@
 
 typedef struct {
     /* ===== Real Time ===== */
-    f64 real_now;        // текущее wall-clock время
-    f64 real_dt;         // реальная дельта (clamped)
-    f64 real_dt_raw;     // сырая дельта (без защиты)
+    f64 real_now;        // current wall-clock time
+    f64 real_dt;         // real delta (clamped)
+    f64 real_dt_raw;     // raw delta (no clamping)
 
     /* ===== Simulation Time ===== */
-    f64 sim_time;        // симуляционное время (ticks * tick_dt)
-    u64 sim_tick;        // номер текущего тика
-    f64 tick_dt;         // фиксированная дельта одного тика
+    f64 sim_time;        // simulation time (ticks * tick_dt)
+    u64 sim_tick;        // current tick number
+    f64 tick_dt;         // fixed delta per tick
 
     /* ===== Accumulator ===== */
-    f64 accumulator;    // накопитель real_dt для sim ticks
+    f64 accumulator;    // accumulates real_dt for sim ticks
 
     /* ===== State ===== */
-    u64 frame_index;     // рендер-фреймы
+    u64 frame_index;     // render frames
     bool paused;
 
     /* ===== Internal ===== */
